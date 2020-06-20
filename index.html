@@ -47,10 +47,10 @@
     var inputNewTodo = document.getElementById('newTodo') //  input 輸入文字
     var clearTaskBtn = document.getElementById('clearTask') // 單筆資料清除
     
-    addBtn.addEventListener('click',addBtnFun())
-    clearTaskBtn.addEventListener('click', clearAll())
-    todoList.addEventListener('click', removeData())
-    todoList.addEventListener('click',completeData())
+    addBtn.addEventListener('click',addBtnFun)
+    clearTaskBtn.addEventListener('click', clearAll)
+    todoList.addEventListener('click', removeData)
+    todoList.addEventListener('click',completeData)
     
     // 將資料渲染到畫面上
     function render() {
