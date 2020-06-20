@@ -47,6 +47,11 @@
     var inputNewTodo = document.getElementById('newTodo') //  input 輸入文字
     var clearTaskBtn = document.getElementById('clearTask') // 單筆資料清除
     
+    addBtn.addEventListener('click',addBtnFun())
+    clearTaskBtn.addEventListener('click', clearAll())
+    todoList.addEventListener('click', removeData())
+    todoList.addEventListener('click',completeData())
+    
     // 將資料渲染到畫面上
     function render() {
       var str = ''
@@ -67,7 +72,7 @@
     }
 
     //  按下新增按鈕, 新增事件到todoData
-    addBtn.addEventListener('click', function () {
+   function addBtnFun () {
       if (inputNewTodo.value.trim() !== '') {
         todoData.push({
           id: Math.floor(Date.now()),
@@ -79,17 +84,17 @@
       taskCount.textContent = todoData.length
       inputNewTodo.value = ''
 
-    })
+    }
 
     // 清除所有任務
-    clearTaskBtn.addEventListener('click', function (e) {
+    function clearAll (e) {
       e.preventDefault();
       todoData = [];
       todoList.innerHTML = '';
       taskCount.textContent = todoData.length;
-    })
+    }
     // 移除單筆資料
-    todoList.addEventListener('click', function (e) {
+    function removeData (e) {
       var newIndex = 0;
       if (e.target.dataset.action == 'remove') {
         todoData.forEach(function (item, key) {
@@ -102,9 +107,9 @@
         render()
         taskCount.textContent = todoData.length;
       }
-    })
+    }
     // 完成單筆資料
-    todoList.addEventListener('click', function (e) {
+     function completeData(e) {
       if (e.target.dataset.action == 'complete') {
         todoData.forEach(function (item) {
           if (e.target.dataset.id == item.id) {
@@ -119,7 +124,7 @@
         render()
         taskCount.textContent = todoData.length;
       }
-    })
+    }
   </script>
 </body>
 
