@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<!-- CSS only -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+  integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+<style>
+  .completed {
+    text-decoration: line-through
+  }
+</style>
+
+<body>
+  <div id="app" class="container my-3">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text">待辦事項</span>
+      </div>
+      <input type="text" class="form-control" placeholder="準備要做的任務" id="newTodo">
+      <div class="input-group-append">
+        <button class="btn btn-primary" type="button" id="addTodo">新增</button>
+      </div>
+    </div>
+    <div class="card text-center">
+      <ul class="list-group list-group-flush text-left" id="todoList">
+      </ul>
+      <div class="card-footer d-flex justify-content-between">
+        <span>還有 <span id="taskCount">0</span> 筆任務</span>
+        <a href="#" id="clearTask">清除所有任務</a>
+      </div>
+    </div>
+  </div>
+  <!-- 資料先定義出來
+    畫面繪製與資料處理分開執行
+    著重在資料處理的能力 -->
+  <script>
+    var todoData = [];
+    var addBtn = document.getElementById('addTodo') // 新增按鈕
+    var todoList = document.getElementById('todoList') // 事件清單
+    var taskCount = document.getElementById('taskCount') // 事件長度
+    var inputNewTodo = document.getElementById('newTodo') //  input 輸入文字
+    var clearTaskBtn = document.getElementById('clearTask') // 單筆資料清除
+    
+    // 將資料渲染到畫面上
+    function render() {
+      var str = ''
+      todoData.forEach(function (item, i) {
+        str += `<li class="list-group-item">
+<div class="d-flex">
+<div class="form-check">
+<input type="checkbox" class="form-check-input" ${item.completed ? 'checked' : ''} data-action="complete" data-id="${item.id}">
+<label class="form-check-label ${item.completed ? 'completed' : ''}" data-action="complete" data-id="${item.id}"> ${item.title}</label>
+</div>
+<button type="button" class="close ml-auto" aria-label="Close">
+<span aria-hidden="true" data-action="remove" data-id="${item.id}">&times;</span>
+</button>
+</div>
+</li>`;
+      })
+      todoList.innerHTML = str
+    }
+
+    //  按下新增按鈕, 新增事件到todoData
+    addBtn.addEventListener('click', function () {
+      if (inputNewTodo.value.trim() !== '') {
+        todoData.push({
+          id: Math.floor(Date.now()),
+          title: inputNewTodo.value,
+          completed: false,
+        })
+      }
+      render()
+      taskCount.textContent = todoData.length
+      inputNewTodo.value = ''
+
+    })
+
+    // 清除所有任務
+    clearTaskBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      todoData = [];
+      todoList.innerHTML = '';
+      taskCount.textContent = todoData.length;
+    })
+    // 移除單筆資料
+    todoList.addEventListener('click', function (e) {
+      var newIndex = 0;
+      if (e.target.dataset.action == 'remove') {
+        todoData.forEach(function (item, key) {
+          if (e.target.dataset.id == item.id) {
+            newIndex = key;
+          }
+        })
+        todoData.splice(newIndex, 1);
+        var str = '';
+        render()
+        taskCount.textContent = todoData.length;
+      }
+    })
+    // 完成單筆資料
+    todoList.addEventListener('click', function (e) {
+      if (e.target.dataset.action == 'complete') {
+        todoData.forEach(function (item) {
+          if (e.target.dataset.id == item.id) {
+            if (item.completed) {
+              item.completed = false;
+            } else {
+              item.completed = true;
+            }
+          }
+        })
+        var str = '';
+        render()
+        taskCount.textContent = todoData.length;
+      }
+    })
+  </script>
+</body>
+
+</html>
