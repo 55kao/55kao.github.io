@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <style>
+    .completed {
+      text-decoration: line-through
+    }
+  </style>
+</head>
+
+<body>
+  <div  class="container my-3">
+    <h2>產品列表</h2>
+    <div id="app" class="card-columns">
+    </div>
+
+  </div>
+  <script>
+    var uuid = 'e44cffb9-2103-484f-8958-dc84de83d323';
+    // var token = '';
+    var apiPath = 'https://course-ec-api.hexschool.io/';
+    var obj = {
+      data: [],
+      getData() {
+        const vm = this;
+        console.log('getData');
+        let url = `${apiPath}api/${uuid}/ec/products`
+        axios.get(url)
+          .then((result) => {
+            vm.data = result.data.data
+            console.log(vm.data)
+            vm.render()
+          }).catch((err) => {
+            console.log(err)
+          });
+      },
+      render() {
+        var app = document.getElementById('app');
+        var products = this.data;
+        var str = '';
+        products.forEach(function (item) {
+          str += `
+      <div class="card">
+      <img src="${ item.imageUrl[0]}" class="card-img-top" alt="${item.content}">
+      <div class="card-body">
+      <h5 class="card-title">${ item.title}</h5>
+      <p class="card-text">${ item.content}</p>
+      </div>
+      </div>`;
+        });
+        app.innerHTML = str;
+      }
+    };
+    obj.getData()
+
+  </script>
+</body>
+
+</html>
