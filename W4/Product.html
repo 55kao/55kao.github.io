@@ -11,9 +11,17 @@
 
 <body>
   <div id="app" class="container">
-    <div class="text-right mt-4">
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#productFrom"
+    <div class="row text-right">
+      <div class=" col-9 "></div>
+      <div class="col-2  mt-4 ">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#productFrom"
         @click="editProduct('new')"> 建立新的產品</button>
+      </div>
+      <div class="col-1 mt-4 ">
+        <button class="btn btn-outline-primary btn-block" type="button" @click="signout">
+          登出
+        </button> 
+      </div>
     </div>
     <table class="table mt-5">
       <thead>

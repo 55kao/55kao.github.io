@@ -119,6 +119,11 @@ new Vue({
           console.log(err);
         });
     },
+    signout() {
+      // 請加入 Token
+      document.cookie = `loginInfo=; expires=; path=/`;
+      window.location = "login.html";
+    },
   },
   created() {
     this.user.token = document.cookie.replace(
@@ -129,7 +134,7 @@ new Vue({
     axios.defaults.headers.common.Authorization = `Bearer ${this.user.token}`;
     // 若無法取得 token 則返回 Login 頁面
     if (this.user.token === "") {
-      window.location = "Login.html";
+      window.location = "login.html";
     }
     this.getData();
   },
