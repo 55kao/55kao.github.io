@@ -1,5 +1,5 @@
 # first-week-main-mission
-六角學院JS直播班
+六角學院JS直播班 [Home](http://55kao.github.io/index.html)
 
 第一週主線任務 [Demo](http://55kao.github.io/week_one.html)
 
